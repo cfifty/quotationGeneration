@@ -7,3 +7,5 @@ sentence_lst = [sentence1, sentence2, sentence3, sentence4]
 
 Generated Sentence: 
 hello jinny , let 's go catch some league of legends !
+maggie , let 's go play some league of legends !
+hello jinny , you 're too toxic in league of legends !
