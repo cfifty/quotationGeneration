@@ -1,5 +1,8 @@
 import nltk	
 import numpy as np
+import os
+import csv
+import pickle
 from nltk.tokenize import TreebankWordTokenizer
 
 class Model():
@@ -182,21 +185,23 @@ kneser_bigram_prob: 				works!
 kneser_trigram_prob: 				works!
 
 '''
+data_path = os.path.abspath(os.path.join(os.path.dirname( __file__ ), '..', 'data_files'))
 
-sentence1 = "Hello Jinny, let's go catch some pokemon today!"
-sentence2 = "Ohhhh noooooo!"
-sentence3 = "Maggie, you're too toxic in league of legends"
-sentence4 = "Hello Jinny, let's go play some League of Legends!"
-sentence_lst = [sentence1, sentence2, sentence3, sentence4]
+# load the data from the trump quotes csv
+f = open(data_path+'/trumpquotes.csv','rb')
+reader = csv.reader(f)   
+trump_quotes = [x[0] for x in reader]
 
+#with open(data_path + '/trumpquotes.pkl','rb') as input:
+#	trump_quotes = pickle.load(input)
 
-model = Model(sentence_lst)
+model = Model(trump_quotes)
 model.train_unigram_model()
 model.train_bigram_model()
 model.train_trigram_model()
 
-print (model.bigram_sentence())
-# print (model.trigram_sentence())
+#print (model.bigram_sentence())
+print (model.trigram_sentence())
 
 
 
