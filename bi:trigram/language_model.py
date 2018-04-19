@@ -83,11 +83,15 @@ class Model():
 
 		chosen_word = np.random.choice(choices,p=prob_dist)
 		if chosen_word == "UNSEEN":
-			chosen_word = unseen_words.get(np.randdom.randint(0,len(unseen_words)))
+			chosen_word = list(unseen_words)[(np.random.randint(0,len(unseen_words)))]
 		return chosen_word
 
 	# return the next word from trigram model with probabilities influenced by simple Kneser-Ney smoothing
 	def kneser_trigram_prob(self,prev_word, mid_word):
+
+		# if our generated prev word is not in the trigram LM, use a bigram LM for that prev word (backoff technique)
+		if prev_word not in self.tri_counts:
+			return self.kneser_bigram_prob(prev_word)
 
 		# if our generated bigram is not in the seen trigrams, use a bigram LM instead
 		if mid_word not in self.tri_counts[prev_word]:
@@ -95,7 +99,7 @@ class Model():
 
 
 		all_words_set = set(self.uni_counts.keys())
-		print(self.tri_counts[prev_word][mid_word])
+		#print(self.tri_counts[prev_word][mid_word])
 		trigram_words_set = set(self.tri_counts[prev_word][mid_word].keys())
 		unseen_words = all_words_set - trigram_words_set
 
@@ -109,11 +113,11 @@ class Model():
 		choices.append("UNSEEN")
 		prob_dist.append(unseen_word_counts/div)
 
-		print(prob_dist)
+		# print(prob_dist)
 
 		chosen_word = np.random.choice(choices,p=prob_dist)
 		if chosen_word == "UNSEEN":
-			chosen_word = unseen_words.get(np.randdom.randint(0,len(unseen_words)))
+			chosen_word = list(unseen_words)[np.random.randint(0,len(unseen_words))]
 		return chosen_word
 
 
@@ -188,20 +192,23 @@ kneser_trigram_prob: 				works!
 data_path = os.path.abspath(os.path.join(os.path.dirname( __file__ ), '..', 'data_files'))
 
 # load the data from the trump quotes csv
-f = open(data_path+'/trumpquotes.csv','rb')
+f = open(data_path+'/ciceroquotes.csv','rb')
 reader = csv.reader(f)   
-trump_quotes = [x[0] for x in reader]
+cicero_quotes = [x[0] for x in reader]
 
 #with open(data_path + '/trumpquotes.pkl','rb') as input:
 #	trump_quotes = pickle.load(input)
 
-model = Model(trump_quotes)
+model = Model(cicero_quotes)
 model.train_unigram_model()
 model.train_bigram_model()
 model.train_trigram_model()
 
+for i in xrange(20):
+	print(model.bigram_sentence())
+
 #print (model.bigram_sentence())
-print (model.trigram_sentence())
+# print (model.trigram_sentence())
 
 
 

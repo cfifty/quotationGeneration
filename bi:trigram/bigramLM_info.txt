@@ -1,0 +1,41 @@
+Good Bigram Quotations:
+WHAT THIS TELLS US: Bigram is really good for shot quotations: when it ends early and has few words (difficult to differentiate between short sentences and longer ones...).  
+
+
+I like her.
+
+you learn from this country back .
+
+i go with it .
+
+i speak to continue to make america safe again , 'i 'm wrong .
+
+i played golf .
+
+we do so much .
+
+i take over the game .
+
+i want to build something , pre-hillary , americans , qaddafi 's entrance into government , et cetera .
+
+i employ thousands of great job for my eyes .
+
+
+
+
+Bad Bigram Quotations:
+WHAT THIS TELLS US: the longer bigram sentences sound really bad... When the sentence gets long enough, we can easily differentiate between these sentences and human readable ones.
+
+
+These countries, they're like I take the hispanic - we do that was that's time.
+
+i was ridiculous , pre-hillary , i thought in real change , pre-hillary , closing down as you young americans in television brings out your breath in this country , winning like qaddafi , ferguson , et cetera .
+
+but always won , frankly , et cetera .
+
+the u.s. has thrown the face of great view on foreign affairs , more productive .
+
+i hate and frankly , how you learn their capability , there is n't like the violence at mit , it .
+
+
+
