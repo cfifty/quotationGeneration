@@ -35,13 +35,13 @@ pip install --upgrade --no-deps git+git://github.com/Theano/Theano.git
 
 ## Evaluation
 ### Language Models
-i. Donald Trump: https://goo.gl/forms/yTv29gNEOguivH0B3
-ii. Cicero: https://goo.gl/forms/eYgZmQsJMMdfATjw1
+A. Donald Trump: https://goo.gl/forms/yTv29gNEOguivH0B3
+B. Cicero: https://goo.gl/forms/eYgZmQsJMMdfATjw1
 
 ### Recurrent Neural Net
 A. 
 B. 
 
 ### LSTM Neural Net
-a.
-b.
+A.
+B.
