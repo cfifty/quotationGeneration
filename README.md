@@ -1,6 +1,14 @@
 # quotationGeneration
 Given a corpus of quotations, generate a new quotation using Language Model techniques
 
+## Report
+Final Report Link: https://docs.google.com/document/d/18K8nKzGEptEv4apl8lS2JtXQjp7exSSntbZDmsjV7wg/edit?usp=sharing
+Proposal Link: https://docs.google.com/document/d/1sa6AfUZY2qDRpmPiJ2wMs5Fvc-Cz3BsqqB8GCFzeKQ4/edit?usp=sharing
+
+## Neural Net Notes:
+Tutorial: http://www.wildml.com/2015/09/recurrent-neural-networks-tutorial-part-1-introduction-to-rnns/
+CUDA GPU on AWS instructions: https://github.com/dennybritz/rnn-tutorial-rnnlm 
+
 ## Language Model Notes
 * Use simplified Kneser-Ney smoothing for bigram and trigrams (literature suggests it is superior to +1 laplace smoothing)
   * Subtract 0.75 from all n-grams which appear 2 or more times
