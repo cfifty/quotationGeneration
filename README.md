@@ -9,6 +9,22 @@ Proposal Link: https://docs.google.com/document/d/1sa6AfUZY2qDRpmPiJ2wMs5Fvc-Cz3
 Tutorial: http://www.wildml.com/2015/09/recurrent-neural-networks-tutorial-part-1-introduction-to-rnns/
 CUDA GPU on AWS instructions: https://github.com/dennybritz/rnn-tutorial-rnnlm 
 
+## Setting up the Virtualenv
+**[Please read the blog post that goes with this code!](http://www.wildml.com/2015/09/recurrent-neural-networks-tutorial-part-2-implementing-a-language-model-rnn-with-python-numpy-and-theano/)**
+
+### Jupyter Notebook Setup
+- Python, pip v 2.7
+- [virtualenv](https://virtualenv.pypa.io/en/latest/)
+
+```bash
+# Create a new virtual environment 
+virtualenv venv
+source venv/bin/activate
+
+# Install requirements
+pip install -r requirements.txt
+```
+
 ## Language Model Notes
 * Use simplified Kneser-Ney smoothing for bigram and trigrams (literature suggests it is superior to +1 laplace smoothing)
   * Subtract 0.75 from all n-grams which appear 2 or more times
