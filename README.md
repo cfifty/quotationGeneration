@@ -3,7 +3,8 @@ Given a corpus of quotations, generate a new quotation using Language Model tech
 
 ## Report
 1. Final Report Link: https://docs.google.com/document/d/18K8nKzGEptEv4apl8lS2JtXQjp7exSSntbZDmsjV7wg/edit?usp=sharing
-2. Proposal Link: https://docs.google.com/document/d/1sa6AfUZY2qDRpmPiJ2wMs5Fvc-Cz3BsqqB8GCFzeKQ4/edit?usp=sharing
+2. Presentation Link: https://docs.google.com/presentation/d/1-x0Ac8Pd5EQoOYOBhsiV3Dr5gEi1hXCUKomJldLNXJQ/edit?usp=sharing
+3. Proposal Link: https://docs.google.com/document/d/1sa6AfUZY2qDRpmPiJ2wMs5Fvc-Cz3BsqqB8GCFzeKQ4/edit?usp=sharing
 
 ## Neural Net Notes:
 Tutorial: http://www.wildml.com/2015/09/recurrent-neural-networks-tutorial-part-1-introduction-to-rnns/
