@@ -12,10 +12,10 @@ from datetime import datetime
 from utils import *
 from rnn_theano import RNNTheano
 
-_VOCABULARY_SIZE = int(os.environ.get('VOCABULARY_SIZE', '4000'))
+_VOCABULARY_SIZE = int(os.environ.get('VOCABULARY_SIZE', '4245'))
 _HIDDEN_DIM = int(os.environ.get('HIDDEN_DIM', '80'))
 _LEARNING_RATE = float(os.environ.get('LEARNING_RATE', '0.005'))
-_NEPOCH = int(os.environ.get('NEPOCH', '5000'))
+_NEPOCH = int(os.environ.get('NEPOCH', '100'))
 _MODEL_FILE = os.environ.get('MODEL_FILE')
 
 def generate_sentence(model):
@@ -33,7 +33,7 @@ def generate_sentence(model):
     sentence_str = [index_to_word[x] for x in new_sentence[1:-1]]
     return sentence_str
 
-def train_with_sgd(model, X_train, y_train, learning_rate=0.005, nepoch=100, evaluate_loss_after=5):
+def train_with_sgd(model, X_train, y_train, learning_rate=0.005, nepoch=10, evaluate_loss_after=1):
     # We keep track of the losses so we can plot them later
     losses = []
     num_examples_seen = 0
@@ -56,6 +56,11 @@ def train_with_sgd(model, X_train, y_train, learning_rate=0.005, nepoch=100, eva
             # One SGD step
             model.sgd_step(X_train[i], y_train[i], learning_rate)
             num_examples_seen += 1
+
+    with open("losses.csv","wb") as f:
+        for loss in losses:
+            f.write(str(loss) + ",\n")
+
 
 vocabulary_size = _VOCABULARY_SIZE
 unknown_token = "UNKNOWN_TOKEN"
@@ -111,10 +116,10 @@ losses = train_with_sgd(model, X_train, y_train, nepoch=_NEPOCH, learning_rate=_
 
 # save the loss after training... 
 #save_model_parameters_theano("./data/rnn-theano-%d-%d-%s.npz" % (model.hidden_dim, model.word_dim, time), model)
-save_model_parameters_theano('./data/trained-model-theano.npz', model)
+save_model_parameters_theano('./data/FINAL_trained-model-theano.npz', model)
 
 
-
+'''
 num_sentences = 10
 senten_min_length = 7
 
@@ -125,7 +130,7 @@ for i in range(num_sentences):
         sent = generate_sentence(model)
     print " ".join(sent)
 
-
+'''
 
 
 
