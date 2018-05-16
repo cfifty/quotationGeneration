@@ -33,7 +33,7 @@ def generate_sentence(model):
     sentence_str = [index_to_word[x] for x in new_sentence[1:-1]]
     return sentence_str
 
-def train_with_sgd(model, X_train, y_train, learning_rate=0.005, nepoch=200, evaluate_loss_after=10):
+def train_with_sgd(model, X_train, y_train, learning_rate=0.005, nepoch=100, evaluate_loss_after=5):
     # We keep track of the losses so we can plot them later
     losses = []
     num_examples_seen = 0
@@ -50,7 +50,7 @@ def train_with_sgd(model, X_train, y_train, learning_rate=0.005, nepoch=200, eva
                 print "Setting learning rate to %f" % learning_rate
             sys.stdout.flush()
             # ADDED! Saving model oarameters
-            # save_model_parameters_theano("./data/rnn-theano-%d-%d-%s.npz" % (model.hidden_dim, model.word_dim, time), model)
+            save_model_parameters_theano("./data/rnn-theano-%d-%d-%s.npz" % (model.hidden_dim, model.word_dim, time), model)
         # For each training example...
         for i in range(len(y_train)):
             # One SGD step
