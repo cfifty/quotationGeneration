@@ -1,6 +1,7 @@
 import requests
 import json
 import nltk
+import os
 from bs4 import BeautifulSoup
 
 trump = 'trumpquotes.csv'
@@ -46,6 +47,16 @@ def getCiceroQuotes(numpages = 38):
             quoteArray.extend(sent_text)
 
     return quoteArray
+
+def textToCsv(filename):
+    csv_name = os.path.splitext(os.path.basename(filename))[0] + ".csv"
+
+    file = open(filename, "r")
+
+    repls = ('\n' , ' '),('\xe2\x80\x9c' , '"'), ('\xe2\x80\x9d' , '"'), ('\xc3\xa6', 'ae')
+    quotes = nltk.sent_tokenize(reduce(lambda a, kv: a.replace(*kv), repls, file.read()))
+
+    makeFile(quotes, csv_name)
 
 def makeFile(quotelist, name):
     with open(name, "wb") as f:

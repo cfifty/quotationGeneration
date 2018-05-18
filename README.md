@@ -33,3 +33,16 @@ pip install --upgrade --no-deps git+git://github.com/Theano/Theano.git
   * Add 0.000027 to unseen n-grams
   * https://www.researchgate.net/profile/Frankie_James2/publication/255479295_Modified_Kneser-Ney_Smoothing_of_n-gram_Models/links/54d156750cf28959aa7adc08.pdf
   * http://ieeexplore.ieee.org/abstract/document/4244538/?part=1
+
+## Evaluation
+### Language Models
+* Donald Trump: https://goo.gl/forms/yTv29gNEOguivH0B3
+* Cicero: https://goo.gl/forms/eYgZmQsJMMdfATjw1
+
+### Recurrent Neural Net
+*
+* 
+
+### LSTM Neural Net
+*
+*
