@@ -1,6 +1,7 @@
 import nltk	
 import numpy as np
 import os
+import math
 import csv
 import pickle
 from nltk.tokenize import TreebankWordTokenizer
@@ -177,6 +178,100 @@ class Model():
 			mid = cur_token 
 		return return_sentence 
 
+	# return the probability of cur_word occuring after prev_word in bigram lm
+	def get_prob_bigram(self,prev_word,cur_word):
+		all_words_set = set(self.uni_counts.keys())
+
+		# if we encounter an unseen word during test evaluation, assign it a probability of 1/(all seen words)
+		if prev_word not in self.bi_counts: 
+			return 1.0/len(all_words_set)
+
+		bigram_words_set = set(self.bi_counts[prev_word].keys())
+		unseen_words = all_words_set - bigram_words_set 
+
+		unseen_word_counts = 0.000027*len(unseen_words)
+		bigram_words_counts = {k:(v - 0.5) if v == 1 else (v - 0.75) for k,v in self.bi_counts[prev_word].iteritems()}
+
+		div = unseen_word_counts + sum(bigram_words_counts.values())
+		choices = [k for k,v in self.bi_counts[prev_word].iteritems()]
+		prob_dist = [v/div for k,v in bigram_words_counts.iteritems()]
+
+		choices.append("UNSEEN")
+		prob_dist.append(unseen_word_counts/div)
+
+		for i in range(len(choices)):
+			if choices[i] == cur_word:
+				return prob_dist[i]
+		return prob_dist[-1]
+
+	# return the probability of cur_word occurring after prev_word and mid_word in trigram lm 
+	def get_prob_trigram(self,prev_word,mid_word,cur_word):
+		all_words_set = set(self.uni_counts.keys())
+
+		# if we encounter an unseen wrod during test evaluation, assign it a probability of 1/(all seen words)
+		if prev_word not in self.tri_counts or mid_word not in self.tri_counts[prev_word]: 
+			return 1./len(all_words_set)	
+
+		trigram_words_set = set(self.tri_counts[prev_word][mid_word].keys())
+		unseen_words = all_words_set - trigram_words_set
+
+		unseen_word_counts = 0.000027*len(unseen_words)
+		trigram_words_counts = {k:(v - 0.5) if v == 1 else (v-0.75) for k,v in self.tri_counts[prev_word][mid_word].iteritems()}
+		
+		div = unseen_word_counts + sum(trigram_words_counts.values())
+		choices = [k for k,v in self.tri_counts[prev_word][mid_word].iteritems()]
+		prob_dist = [v/div for k,v in trigram_words_counts.iteritems()]
+
+		choices.append("UNSEEN")
+		prob_dist.append(unseen_word_counts/div)
+
+		for i in range(len(choices)):
+			if choices[i] == cur_word:
+				return prob_dist[i]
+		return prob_dist[-1]
+
+	# test set is approximately 10% of training data...
+	def perplexity_bigram(self,test_path):
+		# train the bigram probabilities
+		self.train_unigram_model()
+		self.train_bigram_model()
+
+		# load the data from the cicero test set
+		f = open(data_path+test_path,'rb')
+		reader = csv.reader(f)   
+		cicero_test = [x[0] for x in reader]
+
+		perplexity_sum = 0
+		N = 0.0
+
+		for tokens in self.add_start(cicero_test):
+			for i in xrange(1,len(tokens)):
+				perplexity_sum += -1*math.log(self.get_prob_bigram(tokens[i-1],tokens[i]))
+				N += 1
+		return math.exp(perplexity_sum/N)
+
+	def perplexity_trigram(self,test_path):
+		# train the trigram probabilities
+		self.train_unigram_model()
+		self.train_bigram_model()
+		self.train_trigram_model()
+
+		# load the data from the cicero test set
+		f = open(data_path+test_path,'rb')
+		reader = csv.reader(f)   
+		cicero_test = [x[0] for x in reader]
+
+		perplexity_sum = 0
+		N = 0.	
+
+		for tokens in self.add_start(cicero_test):
+			for i in xrange(2,len(tokens)):
+				prev_word = tokens[i-2]
+				mid_word = tokens[i-1]
+				perplexity_sum += -1*math.log(self.get_prob_trigram(prev_word,mid_word,tokens[i]))
+				N += 1
+		return math.exp(perplexity_sum/N)
+
 ''' 
 Test Suite to ensure functionality
 
@@ -187,8 +282,8 @@ train_trigram_model: 				works!
 
 kneser_bigram_prob: 				works!
 kneser_trigram_prob: 				works!
-
 '''
+
 data_path = os.path.abspath(os.path.join(os.path.dirname( __file__ ), '..', 'data_files'))
 
 # load the data from the trump quotes csv
@@ -207,9 +302,8 @@ model.train_trigram_model()
 for i in xrange(20):
 	print(model.bigram_sentence())
 
-#print (model.bigram_sentence())
-# print (model.trigram_sentence())
-
+print("here is your bigram perplexity " + str(model.perplexity_bigram('/cicero_test_set.csv')))
+print("here is your trigram perplexity " + str(model.perplexity_trigram('/cicero_test_set.csv')))
 
 
 
