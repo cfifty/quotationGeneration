@@ -9,13 +9,13 @@ from datetime import datetime
 from gru_theano import GRUTheano
 
 LEARNING_RATE = float(os.environ.get("LEARNING_RATE", "0.001"))
-VOCABULARY_SIZE = int(os.environ.get("VOCABULARY_SIZE", "1000"))
+VOCABULARY_SIZE = int(os.environ.get("VOCABULARY_SIZE", "3000"))
 EMBEDDING_DIM = int(os.environ.get("EMBEDDING_DIM", "48"))
 HIDDEN_DIM = int(os.environ.get("HIDDEN_DIM", "128"))
-NEPOCH = int(os.environ.get("NEPOCH", "500"))
+NEPOCH = int(os.environ.get("NEPOCH", "200"))
 MODEL_OUTPUT_FILE = os.environ.get("MODEL_OUTPUT_FILE")
 INPUT_DATA_FILE = os.environ.get("INPUT_DATA_FILE", "./data/trumpquotes.csv")
-PRINT_EVERY = int(os.environ.get("PRINT_EVERY", "1000"))
+PRINT_EVERY = int(os.environ.get("PRINT_EVERY", "3000"))
 
 if not MODEL_OUTPUT_FILE:
   ts = datetime.now().strftime("%Y-%m-%d-%H-%M")
