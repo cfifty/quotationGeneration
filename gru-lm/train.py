@@ -25,10 +25,11 @@ if not MODEL_OUTPUT_FILE:
 # compute the perplexity of a pre-loaded model
 x_train, y_train, word_to_index, index_to_word = load_data(INPUT_DATA_FILE, VOCABULARY_SIZE)
 model = load_model_parameters_theano('./data/gru-theano-2018-05-18-16-13-00.npz')
-print("here is your perplexity " + str(calc_perplexity(model,index_to_word,word_to_index)))
+# print("here is your perplexity " + str(calc_perplexity(model,index_to_word,word_to_index)))
+generate_sentences(model, 100, index_to_word, word_to_index)
 
 
-
+# uncomment to train a new model
 '''
 # Load data
 x_train, y_train, word_to_index, index_to_word = load_data(INPUT_DATA_FILE, VOCABULARY_SIZE)
