@@ -112,16 +112,17 @@ print "SGD Step time: %f milliseconds" % ((t2 - t1) * 1000.)
 if _MODEL_FILE != None:
     load_model_parameters_theano(_MODEL_FILE, model)
 
-losses = train_with_sgd(model, X_train, y_train, nepoch=_NEPOCH, learning_rate=_LEARNING_RATE)
+#losses = train_with_sgd(model, X_train, y_train, nepoch=_NEPOCH, learning_rate=_LEARNING_RATE)
 
 # save the loss after training... 
 # save_model_parameters_theano("./data/rnn-theano-%d-%d-%s.npz" % (model.hidden_dim, model.word_dim, time), model)
-save_model_parameters_theano('./data/FINAL_trained-model-theano.npz', model)
+#save_model_parameters_theano('./data/FINAL_trained-model-theano.npz', model)
 
-#load_model_parameters_theano('./data/5_16_nepoch1000/FINAL_trained-model-theano.npz',model)
+load_model_parameters_theano('./data/rnn-theano-80-3000-2018-05-20-07-45-31.npz',model)
 #print("here is your perplexity " + str(calc_perplexity(model,index_to_word,word_to_index)))
 
-'''
+
+
 gen_sentence_lst = []
 for i in range(100):
     tmp = " ".join(generate_sentence(model))
@@ -135,5 +136,5 @@ with open('theano_trained_rnn_trump.csv', "wb") as f:
         else:
             f.write('"' + quotation + '",\n')
 
-'''
+
 

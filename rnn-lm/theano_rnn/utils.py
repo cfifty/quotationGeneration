@@ -53,7 +53,7 @@ def calc_perplexity(model, index_to_word, word_to_index):
         for word in tokenized_sentences[i][1:-1]:
             #print("here is your word " + str(word))
             next_word_probs = model.forward_propagation(partial_sentence)[-1]
-            #print("predictions " + str(next_word_probs))
+
             if word in word_to_index:
                 perplexity_sum += -1*math.log(next_word_probs[word_to_index[word]])
                 partial_sentence.append(word_to_index[word])
