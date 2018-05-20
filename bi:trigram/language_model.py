@@ -201,7 +201,9 @@ class Model():
 
 		for i in range(len(choices)):
 			if choices[i] == cur_word:
+				# print("prob distribution for seen word " + str(prob_dist[i]))
 				return prob_dist[i]
+		# print("returning prob_dist for unseen word " + str(prob_dist[-1]))
 		return prob_dist[-1]
 
 	# return the probability of cur_word occurring after prev_word and mid_word in trigram lm 
@@ -222,7 +224,6 @@ class Model():
 		choices = [k for k,v in self.tri_counts[prev_word][mid_word].iteritems()]
 		prob_dist = [v/div for k,v in trigram_words_counts.iteritems()]
 
-		choices.append("UNSEEN")
 		prob_dist.append(unseen_word_counts/div)
 
 		for i in range(len(choices)):
@@ -241,7 +242,7 @@ class Model():
 		reader = csv.reader(f)   
 		cicero_test = [x[0] for x in reader]
 
-		perplexity_sum = 0
+		perplexity_sum = 0.
 		N = 0.0
 
 		for tokens in self.add_start(cicero_test):
@@ -290,18 +291,18 @@ data_path = "./data/"
 # load the data from the trump quotes csv
 f = open(data_path+'/trumpquotes.csv','rb')
 reader = csv.reader(f)   
-cicero_quotes = [x[0] for x in reader]
+trump_quotes = [x[0] for x in reader]
 
 #with open(data_path + '/trumpquotes.pkl','rb') as input:
 #	trump_quotes = pickle.load(input)
 
-model = Model(cicero_quotes)
+model = Model(trump_quotes)
 model.train_unigram_model()
 model.train_bigram_model()
 model.train_trigram_model()
 
-for i in xrange(100):
-	print(model.trigram_sentence())
+#for i in xrange(100):
+#	print(model.trigram_sentence())
 
 print("here is your bigram perplexity " + str(model.perplexity_bigram('/trump_test_set.csv')))
 print("here is your trigram perplexity " + str(model.perplexity_trigram('/trump_test_set.csv')))
