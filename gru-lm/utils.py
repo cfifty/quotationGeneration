@@ -7,6 +7,7 @@ import nltk
 import time
 import sys
 import operator
+import math
 import io
 import array
 from datetime import datetime
@@ -145,6 +146,43 @@ def gradient_check_theano(model, x, y, h=0.001, error_threshold=0.01):
                 return 
             it.iternext()
         print "Gradient check for parameter %s passed." % (pname)
+
+
+def calc_perplexity(model, index_to_word, word_to_index):
+
+    print("ENTERED CALC PERPLEXITY")
+
+    # load the data from the cicero test set
+    with open('./data/cicero_test_set.csv', 'rt') as f:
+        reader = csv.reader(f, skipinitialspace=True)
+        reader.next()
+        sentences = itertools.chain(*[nltk.sent_tokenize(x[0].decode("utf-8").lower()) for x in reader])
+        sentences = ["%s %s %s" % (SENTENCE_START_TOKEN, x, SENTENCE_END_TOKEN) for x in sentences]
+
+    tokenized_sentences = [nltk.word_tokenize(sent) for sent in sentences]
+
+    perplexity_sum = 0.
+    N = 0.
+
+    print("ABOUT TO ENTER LOOP")
+    for i in range(len(tokenized_sentences)):
+        print("index: " + str(i))
+        print("total: " + str(len(tokenized_sentences)))
+        partial_sentence = [word_to_index[SENTENCE_START_TOKEN]]
+        for word in tokenized_sentences[i][1:-1]:
+            #print("here is your word " + str(word))
+            next_word_probs = model.predict(partial_sentence)[-1]
+            #print("predictions " + str(next_word_probs))
+            if word in word_to_index:
+                perplexity_sum += -1*math.log(next_word_probs[word_to_index[word]])
+                partial_sentence.append(word_to_index[word])
+            else:
+                perplexity_sum += -1*math.log(next_word_probs[word_to_index[UNKNOWN_TOKEN]])
+                partial_sentence.append(word_to_index[UNKNOWN_TOKEN])
+            N += 1
+        print('estimate of perplexity ' + str(math.exp(perplexity_sum/N)))
+    return math.exp(perplexity_sum/N)
+
 
 
 def print_sentence(s, index_to_word):

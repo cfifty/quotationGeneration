@@ -21,6 +21,15 @@ if not MODEL_OUTPUT_FILE:
   ts = datetime.now().strftime("%Y-%m-%d-%H-%M")
   MODEL_OUTPUT_FILE = "GRU-%s-%s-%s-%s.dat" % (ts, VOCABULARY_SIZE, EMBEDDING_DIM, HIDDEN_DIM)
 
+
+# compute the perplexity of a pre-loaded model
+x_train, y_train, word_to_index, index_to_word = load_data(INPUT_DATA_FILE, VOCABULARY_SIZE)
+model = load_model_parameters_theano('./data/gru-theano-2018-05-18-16-13-00.npz')
+print("here is your perplexity " + str(calc_perplexity(model,index_to_word,word_to_index)))
+
+
+
+'''
 # Load data
 x_train, y_train, word_to_index, index_to_word = load_data(INPUT_DATA_FILE, VOCABULARY_SIZE)
 
@@ -61,9 +70,7 @@ loss_lst = []
 for epoch in range(NEPOCH):
   train_with_sgd(model, x_train, y_train, learning_rate=LEARNING_RATE, nepoch=1, decay=0.9, 
     callback_every=PRINT_EVERY, callback=sgd_callback)
-
-
-
+'''
 
 
 
