@@ -1,8 +1,0 @@
-perplexity_sum 99780.7212646
-here is your N 17340.0
-here is your bigram perplexity 358.653139251
-
-
-perplexity_sum 78660.0940931
-here is your N 16941.0
-here is your trigram perplexity 139.646685541

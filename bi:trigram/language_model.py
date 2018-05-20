@@ -284,10 +284,11 @@ kneser_bigram_prob: 				works!
 kneser_trigram_prob: 				works!
 '''
 
-data_path = os.path.abspath(os.path.join(os.path.dirname( __file__ ), '..', 'data_files'))
+#data_path = os.path.abspath(os.path.join(os.path.dirname( __file__ ), '..', 'data_files'))
+data_path = "./data/"
 
 # load the data from the trump quotes csv
-f = open(data_path+'/ciceroquotes.csv','rb')
+f = open(data_path+'/trumpquotes.csv','rb')
 reader = csv.reader(f)   
 cicero_quotes = [x[0] for x in reader]
 
@@ -299,11 +300,11 @@ model.train_unigram_model()
 model.train_bigram_model()
 model.train_trigram_model()
 
-for i in xrange(20):
-	print(model.bigram_sentence())
+for i in xrange(100):
+	print(model.trigram_sentence())
 
-print("here is your bigram perplexity " + str(model.perplexity_bigram('/cicero_test_set.csv')))
-print("here is your trigram perplexity " + str(model.perplexity_trigram('/cicero_test_set.csv')))
+print("here is your bigram perplexity " + str(model.perplexity_bigram('/trump_test_set.csv')))
+print("here is your trigram perplexity " + str(model.perplexity_trigram('/trump_test_set.csv')))
 
 
 
